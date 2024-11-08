@@ -1,0 +1,9 @@
+.ar-center{
+    display: flex;
+    justify-content: space-around;
+}
+
+.item{
+    text-align: center;
+    margin: 5px;
+}
