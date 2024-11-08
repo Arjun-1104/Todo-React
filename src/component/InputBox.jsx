@@ -1,37 +1,33 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import style from '../styles/InputBox.module.css';
 import { IoAddCircle } from "react-icons/io5";
 
 function InputBox({onInputTask}) {
 
-    let [todoName,setTodoName] = useState('');
-    let [todoDate,setTodoDate] = useState('');
+    let nameElement = useRef();
+    let dueDateElement = useRef();
 
-    let handleNameChange = (event) => {
-        setTodoName(event.target.value);
-    }
-    let handleDateChange = (event) => {
-        setTodoDate(event.target.value);
-    }
-
-    let handleAddBtn = () => {
+    let handleAddBtn = (event) => {
+        event.preventDefault();
+        let todoName = nameElement.current.value;
+        let todoDate = dueDateElement.current.value;
+        nameElement.current.value = '';
+        dueDateElement.current.value = '';
         onInputTask(todoName,todoDate);
-        setTodoName('');
-        setTodoDate('');
     }
 
     return <div className={`container ${style.item}`}>
-        <div className={`row ${style['ar-center']}`}>
+        <form className={`row ${style['ar-center']}`} onSubmit={handleAddBtn}>
             <div className="col-4">
-                <input type="text" placeholder="Enter your task?" value={todoName} onChange={handleNameChange}/>
+                <input ref={nameElement} type="text" placeholder="Enter your task?"/>
             </div>
             <div className="col-3">
-                <input type="date" value={todoDate} onChange={handleDateChange}/>
+                <input ref={dueDateElement} type="date"/>
             </div>
             <div className="col-2">
-                <button type="button" className="btn btn-success" onClick={handleAddBtn}><IoAddCircle/></button>
+                <button className="btn btn-success"><IoAddCircle/></button>
             </div>
-        </div>
+        </form>
     </div>
 }
 
