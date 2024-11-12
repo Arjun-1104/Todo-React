@@ -1,7 +1,11 @@
 import style from '../styles/SingleTodo.module.css';
 import { MdDelete } from "react-icons/md";
+import { useContext } from 'react';
+import { TodoItemContext } from '../store/todo-item-store';
 
-let SingleTodo = ({name,dueDate,handleDeleteTodo}) => {
+let SingleTodo = ({name,dueDate}) => {
+
+    let {deleteItem} = useContext(TodoItemContext);
     
     return <>
     <div className={`row ${style['ar-center']}`}>
@@ -12,7 +16,7 @@ let SingleTodo = ({name,dueDate,handleDeleteTodo}) => {
                 <p>{dueDate}</p>
             </div>
             <div className="col-2">
-                <button type="button" className="btn btn-danger" onClick={() => handleDeleteTodo(name)}><MdDelete/></button>
+                <button type="button" className="btn btn-danger" onClick={() => deleteItem(name)}><MdDelete/></button>
             </div>
         </div>
     </>

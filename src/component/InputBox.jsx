@@ -1,8 +1,11 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import style from '../styles/InputBox.module.css';
 import { IoAddCircle } from "react-icons/io5";
+import { TodoItemContext } from '../store/todo-item-store';
 
-function InputBox({onInputTask}) {
+function InputBox() {
+
+    let {addItem} = useContext(TodoItemContext);
 
     let nameElement = useRef();
     let dueDateElement = useRef();
@@ -13,7 +16,7 @@ function InputBox({onInputTask}) {
         let todoDate = dueDateElement.current.value;
         nameElement.current.value = '';
         dueDateElement.current.value = '';
-        onInputTask(todoName,todoDate);
+        addItem(todoName,todoDate);
     }
 
     return <div className={`container ${style.item}`}>

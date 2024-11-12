@@ -3,6 +3,7 @@ import TodoHeading from "./component/TodoHeading";
 import InputBox from "./component/InputBox";
 import TodoItem from "./component/TodoItem";
 import EmptyMessage from './component/EmptyMessage';
+import { TodoItemContext } from './store/todo-item-store';
 import { useState } from 'react';
 import './App.css';
 
@@ -22,24 +23,29 @@ function App() {
 //     dueDate: '12/10/24'
 //   }
 // ];
-function onInputTask(itemName,itemDueDate){
-  const newArrItems = [...todoItems,{name: itemName,dueDate: itemDueDate}];
-  setTodoItems(newArrItems);
-  
+
+function addItem(itemName,itemDueDate){
+  setTodoItems((currValue)=> [
+    ...currValue,
+    {name: itemName,dueDate: itemDueDate}
+  ]);
 }
-let handleDeleteTodo = (deleteName) => { 
+
+let deleteItem = (deleteName) => { 
   let newArr = todoItems.filter((item)=> item.name !== deleteName)
   setTodoItems(newArr);
 }
 
 // console.log(todoItems)
+
   return <div className="container w-50 outerContainer">
     <div className="container mx-1">
-  
-      <TodoHeading></TodoHeading>
-      <InputBox onInputTask={onInputTask}></InputBox>
-      {todoItems.length===0?<EmptyMessage></EmptyMessage>:<TodoItem todoItems={todoItems} handleDeleteTodo={handleDeleteTodo}></TodoItem> }
-
+      <TodoItemContext.Provider value={{todoItems,addItem,deleteItem}}>
+        <TodoHeading></TodoHeading>
+        <InputBox></InputBox>
+        <EmptyMessage></EmptyMessage>
+        <TodoItem></TodoItem> 
+      </TodoItemContext.Provider>
    </div>
   </div>
 }
