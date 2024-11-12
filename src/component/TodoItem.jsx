@@ -10,8 +10,7 @@ function TodoItem() {
     return <div className={`container ${style.item}`}>
         {todoItems.map(({name,dueDate})=> 
         <SingleTodo key={name} name={name} dueDate={dueDate}></SingleTodo>
-         )}
-        
+        )} 
     </div>
 }
 
